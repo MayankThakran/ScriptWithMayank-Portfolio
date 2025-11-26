@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — Mayank Thakran</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav-wrap">
+    <div class="container nav">
+      <a class="logo" href="index.html">Mayank<span>.</span></a>
+      <nav class="desktop-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html" class="active btn-primary">Contact</a>
+      </nav>
+      <button id="mobile-toggle" class="mobile-toggle">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact-hero container">
+      <h1>Contact</h1>
+      <p class="lead">Describe your project — budget & timeline. I'll reply as soon as possible.</p>
+    </section>
+
+    <section class="contact-form container">
+      <div class="contact-grid">
+        <!-- FORM CARD (styled with your style.css) -->
+        <form id="contactForm" action="https://formspree.io/f/xldkqpgp" method="POST" class="form-card" autocomplete="off">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="Your name" required>
+
+          <label>Email</label>
+          <input type="email" name="_replyto" placeholder="you@example.com" required>
+
+          <label>Project / Message</label>
+          <textarea name="message" rows="6" placeholder="Describe your project, budget & timeline" required></textarea>
+
+          <div style="display:flex; gap:12px; align-items:center; margin-top:14px;">
+            <button type="submit" id="submitBtn" class="btn-primary" style="padding:10px 18px;">Send Message</button>
+            <div id="loader" style="display:none;color:var(--muted)">Sending…</div>
+            <div id="statusMsg" style="display:none; font-size:14px;"></div>
+          </div>
+        </form>
+
+        <!-- CONTACT INFO (aside) -->
+        <aside class="contact-info">
+          <h3>Quick Contact</h3>
+          <p><strong>Email:</strong> <a href="mailto:thakranm992@@gmail.com" style="color:var(--accent); text-decoration:none;">yourname@gmail.com</a></p>
+          <p><strong>Instagram:</strong> <a href="https://instagram.com/scriptwithmayank" target="_blank" style="color:var(--accent); text-decoration:none;">@scriptwithmayank</a></p>
+
+
+          <div style="margin-top:18px;">
+            <h4>Why choose me?</h4>
+            <ul style="color:var(--muted); padding-left:18px; margin-top:8px;">
+              <li>Fast delivery & clear communication</li>
+              <li>Mobile-first responsive design</li>
+              <li>Clean UI focused on conversions</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-left">© 2025 Mayank Thakran</div>
+      <div class="footer-right">
+        <a href="https://instagram.com/" target="_blank">Instagram</a>
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="mailto:thakranm992@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightweight form script (keeps same UX as portfolio) -->
+  <script>
+    (function(){
+      const form = document.getElementById('contactForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const loader = document.getElementById('loader');
+      const statusMsg = document.getElementById('statusMsg');
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        loader.style.display = 'block';
+        statusMsg.style.display = 'none';
+
+        const data = new FormData(form);
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            // success
+            loader.style.display = 'none';
+            statusMsg.style.display = 'block';
+            statusMsg.style.color = 'var(--accent)';
+            statusMsg.innerText = '✅ Message sent — I will reply soon!';
+            form.reset();
+          } else {
+            throw new Error('Network');
+          }
+        } catch (err) {
+          loader.style.display = 'none';
+          statusMsg.style.display = 'block';
+          statusMsg.style.color = '#ff6b6b';
+          statusMsg.innerText = '❌ Failed to send. Please try again later.';
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
